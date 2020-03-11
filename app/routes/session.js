@@ -107,13 +107,15 @@ function SessionHandler(db) {
             // Fix the problem by regenerating a session in each login
             // by wrapping the below code as a function callback for the method req.session.regenerate()
             // i.e:
-            // `req.session.regenerate(function() {})`
-            req.session.userId = user._id;
-            if (user.isAdmin) {
-              return res.redirect("/benefits");
-            } else {
-              return res.redirect("/dashboard");
-            }
+            req.session.regenerate(function() {
+              req.session.userId = user._id;
+              if (user.isAdmin) {
+                return res.redirect("/benefits");
+              } else {
+                return res.redirect("/dashboard");
+              }
+            })
+
         });
     };
 
@@ -141,7 +143,7 @@ function SessionHandler(db) {
         var FNAME_RE = /^.{1,100}$/;
         var LNAME_RE = /^.{1,100}$/;
         var EMAIL_RE = /^[\S]+@[\S]+\.[\S]+$/;
-        var PASS_RE = /^.{1,20}$/;
+        var PASS_RE = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
         /*
         //Fix for A2-2 - Broken Authentication -  requires stronger password
         //(at least 8 characters with numbers and both lowercase and uppercase letters.)
