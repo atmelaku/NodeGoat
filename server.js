@@ -11,8 +11,8 @@ var swig = require("swig");
 var MongoClient = require("mongodb").MongoClient; // Driver for connecting to MongoDB
 var http = require("http");
 var marked = require("marked");
-//var helmet = require("helmet");
-//var nosniff = require('dont-sniff-mimetype');
+var helmet = require("helmet");
+var nosniff = require('dont-sniff-mimetype');
 var app = express(); // Web framework to handle routing requests
 var routes = require("./app/routes");
 var config = require("./config/config"); // Application config properties
@@ -37,20 +37,20 @@ MongoClient.connect(config.db, function(err, db) {
     }
     console.log("Connected to the database: " + config.db);
 
-    /*
+
     // Fix for A5 - Security MisConfig
     // TODO: Review the rest of helmet options, like "xssFilter"
     // Remove default x-powered-by response header
     app.disable("x-powered-by");
 
     // Prevent opening page in frame or iframe to protect from clickjacking
-    app.use(helmet.xframe());
+    //app.use(helmet.xframe());
 
     // Prevents browser from caching and storing page
     app.use(helmet.noCache());
 
     // Allow loading resources only from white-listed domains
-    app.use(helmet.csp());
+    //app.use(helmet.csp());
 
     // Allow communication only on HTTPS
     app.use(helmet.hsts());
@@ -64,7 +64,7 @@ MongoClient.connect(config.db, function(err, db) {
 
     // Forces browser to only use the Content-Type set in the response header instead of sniffing or guessing it
     app.use(nosniff());
-    */
+
 
     // Adding/ remove HTTP Headers for security
     app.use(favicon(__dirname + "/app/assets/favicon.ico"));
