@@ -16,7 +16,7 @@ var nosniff = require('dont-sniff-mimetype');
 var app = express(); // Web framework to handle routing requests
 var routes = require("./app/routes");
 var config = require("./config/config"); // Application config properties
-/*
+
 // Fix for A6-Sensitive Data Exposure
 // Load keys for establishing secure HTTPS connection
 var fs = require("fs");
@@ -26,7 +26,7 @@ var httpsOptions = {
     key: fs.readFileSync(path.resolve(__dirname, "./artifacts/cert/server.key")),
     cert: fs.readFileSync(path.resolve(__dirname, "./artifacts/cert/server.crt"))
 };
-*/
+
 
 MongoClient.connect(config.db, function(err, db) {
     if (err) {
